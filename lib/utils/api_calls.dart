@@ -1,0 +1,99 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:recipes/utils/db.dart';
+import 'package:recipes/models/recipe.dart';
+import 'package:http/http.dart' as http;
+import 'package:recipes/utils/utils.dart';
+import 'package:tuple/tuple.dart';
+
+/*Future<String> loadConfigIp() async {
+  final String configString = await rootBundle.loadString('assets/conifg.json');
+  final Map<String, dynamic> config = jsonDecode(configString);
+  ApiCall._uri = config['ip'];
+  return config['ip'];
+}
+
+
+*/
+final Map<String, dynamic> config =
+    jsonDecode(File('lib\\config.json').readAsStringSync());
+
+class ApiCall {
+  static String _uri = config['ip'];
+
+  static Future<Tuple2<int, List<Recipe>>> fetchRecipes(
+      DateTime lastSyncTimestamp,
+      {String? isArchived}) async {
+    List<Recipe> recipes = [];
+    Map<String, dynamic> params = {
+      'last_sync_timestamp': Utils.dateFormatter.format(lastSyncTimestamp),
+      'is_archived': isArchived,
+    };
+    final response =
+        await http.get(Uri.parse(_uri).replace(queryParameters: params));
+    if (response.statusCode == 200) {
+      //Map<String, dynamic>
+      final List<dynamic> datas = jsonDecode(response.body);
+      recipes = datas.map((recipeJson) => Recipe.fromJson(recipeJson)).toList();
+      /*recipes = jsonDecode(response.body)
+          .map((recipeJson) => Recipe.fromJson(recipeJson))
+          .toList();*/
+
+      return Tuple2(response.statusCode, recipes);
+    }
+
+    return Tuple2(404, []);
+  }
+
+  static Future<int> sendRecipes(List<Recipe> recipeList) async {
+    final db = RecipesDb.instance;
+    int status = 201;
+    for (Recipe recipe in recipeList) {
+      final response = await http.post(Uri.parse(_uri),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode(recipe.toApiMap()));
+      if (response.statusCode != 201) {
+        status = response.statusCode;
+      } else {
+        // Update the local id with the id given by the server
+        final String serverId = jsonDecode(response.body)['id'];
+        db.updateItemWithServerId(recipe.id, serverId);
+
+        final String serverLastModified =
+            jsonDecode(response.body)['lastModified'];
+        db.updateItemWithServerLastModified(serverId, serverLastModified);
+      }
+    }
+    return status;
+  }
+
+  static Future<int> updateRecipes(List<Recipe> recipeList) async {
+    final db = RecipesDb.instance;
+    int status = 200;
+    for (Recipe recipe in recipeList) {
+      final response = await http.put(Uri.parse('$_uri/${recipe.id}'),
+          headers: {'Content-Type': 'application/json'},
+          body: jsonEncode(recipe.toApiMap()));
+      if (response.statusCode != 200) {
+        status = response.statusCode;
+      } else {
+        final String serverLastModified =
+            jsonDecode(response.body)['lastModified'];
+        db.updateItemWithServerLastModified(recipe.id, serverLastModified);
+      }
+    }
+    return status;
+  }
+
+  static Future<int> deleteRecipes(List<Recipe> recipeList) async {
+    int status = 200;
+    for (Recipe recipe in recipeList) {
+      final response = await http.delete(Uri.parse('$_uri/${recipe.id}'));
+      if (response.statusCode != 200) {
+        status = response.statusCode;
+      }
+    }
+    return status;
+  }
+}
