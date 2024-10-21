@@ -2,7 +2,7 @@
 
 A Flutter project to save your favorites recipes
 
-You should fill lib/config.json
+Enter your API ip in assets/config.json
 
 
 To install using adb:
