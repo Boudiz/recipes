@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:recipes/models/text_constants.dart';
 import 'package:recipes/settings.dart';
+import 'package:recipes/style/themes.dart';
 import 'package:recipes/widgets/main_menu.dart';
 import 'package:recipes/widgets/recipe_list.dart';
 import 'package:recipes/add_recipe_form.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context) => SettingsProvider(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -16,17 +18,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => SettingsProvider(),
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme:
-              ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 183, 58, 58)),
-          useMaterial3: true,
-        ),
-        home: HomePage(),
-      ),
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme:
+          context.watch<SettingsProvider>().isDarkMode ? darkTheme : lightTheme,
+      home: HomePage(),
     );
   }
 }
@@ -50,12 +46,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   void initState() {
-    super.initState();
     Provider.of<SettingsProvider>(context, listen: false).loadSettings();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    //Provider.of<SettingsProvider>(context, listen: false).loadSettings();
     return Scaffold(
       appBar: AppBar(
         title: Text(TextConstants.title),

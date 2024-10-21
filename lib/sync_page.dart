@@ -11,11 +11,9 @@ import 'package:tuple/tuple.dart';
 class SyncPageApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Syncronisation')),
-        body: SyncPage(),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Syncronisation')),
+      body: SyncPage(),
     );
   }
 }

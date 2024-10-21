@@ -15,12 +15,10 @@ class FormRecipeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text(TextConstants.formTitle)),
-        body: FormRecipe(
-          recipe: recipe,
-        ),
+    return Scaffold(
+      appBar: AppBar(title: const Text(TextConstants.formTitle)),
+      body: FormRecipe(
+        recipe: recipe,
       ),
     );
   }
@@ -150,14 +148,14 @@ class _FormRecipeState extends State<FormRecipe> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("${TextConstants.ingredient}s"),
-                  ElevatedButton.icon(
-                      onPressed: _addIngredientField,
-                      icon: Icon(Icons.add),
-                      label: Text(TextConstants.add)),
-                  ElevatedButton.icon(
-                      onPressed: _removeIngredientField,
-                      icon: Icon(Icons.remove),
-                      label: Text(TextConstants.remove)),
+                  ElevatedButton(
+                    onPressed: _addIngredientField,
+                    child: Icon(Icons.add),
+                  ),
+                  ElevatedButton(
+                    onPressed: _removeIngredientField,
+                    child: Icon(Icons.remove),
+                  ),
                   ElevatedButton.icon(
                       onPressed: () async {
                         List<String> ingredients =
@@ -209,10 +207,7 @@ class _FormRecipeState extends State<FormRecipe> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
-                        );
+                        Navigator.pop(context);
                       },
                       child: const Text('Cancel'),
                     ),

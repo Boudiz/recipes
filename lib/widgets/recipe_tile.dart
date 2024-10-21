@@ -26,10 +26,12 @@ class _RecipeTileState extends State<RecipeTile> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Card(
       color: widget.recipe.deleted
-          ? Color.fromARGB(216, 238, 11, 11)
-          : Color.fromARGB(220, 253, 253, 253),
+          ? theme.colorScheme.onErrorContainer
+          : theme.colorScheme.onPrimaryContainer,
       margin: EdgeInsets.all(8.0),
       child: Padding(
         padding: EdgeInsets.all(16.0),
@@ -39,7 +41,8 @@ class _RecipeTileState extends State<RecipeTile> {
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               Text(
                 widget.recipe.name,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: theme.textTheme.headlineLarge,
+                selectionColor: theme.colorScheme.primary,
               ),
               SizedBox(
                 width: 10,
@@ -57,7 +60,7 @@ class _RecipeTileState extends State<RecipeTile> {
                   widget.recipe.isFavorite
                       ? Icons.favorite
                       : Icons.favorite_border,
-                  color: Colors.red,
+                  color: const Color.fromRGBO(240, 10, 10, 1),
                 ),
               ),
               SizedBox(
@@ -128,8 +131,25 @@ class _RecipeTileState extends State<RecipeTile> {
                   Text('Ingredients:',
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   for (var ingredient in widget.recipe.ingredients)
-                    Text(ingredient),
-                  SizedBox(height: 8.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 6.0,
+                          height: 8.0,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: theme.colorScheme.secondary,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 8,
+                        ),
+                        Text(ingredient),
+                      ],
+                    ),
+
+                  /*SizedBox(height: 8.0),
                   Text(
                     'Description:',
                     style: TextStyle(fontWeight: FontWeight.bold),
@@ -139,7 +159,7 @@ class _RecipeTileState extends State<RecipeTile> {
                   ),
                   Text(Utils.dateFormatter.format(widget.recipe.created)),
                   Text(Utils.dateFormatter.format(widget.recipe.lastModified)),
-                  Text("id: ${widget.recipe.id}"),
+                  Text("id: ${widget.recipe.id}"),*/
                 ],
               ),
             ),

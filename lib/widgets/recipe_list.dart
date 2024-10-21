@@ -130,8 +130,6 @@ class _RecipeListState extends State<RecipeList> {
                       child: Center(
                           child: Text('No recipe found for "$_searchText"')),
                     )),
-                Text(
-                    "Settings showDeleted : ${context.watch<SettingsProvider>().showDeleted ? "true" : "false"}"),
                 Expanded(
                   child: AnimatedList(
                     key: _listKey,
