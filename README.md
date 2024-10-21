@@ -1,13 +1,21 @@
-# recipes
+## Recipes
 
 A Flutter project to save your favorites recipes
 
 Enter your API ip in assets/config.json
 
 
+## Build
+Build using: 
+flutter build apk --release
+
+## Install 
+Transfer the apk on the desireced phone
+Open the apk on your phone
+
 To install using adb:
     adb devices
-    adb - s < device name gatered from previous command > install .\build\app\outputs\flutter-apk\app-debug.apk
+    adb - s < device name gatered from previous command > install .\build\app\outputs\flutter-apk\app-release.apk
 
 ## Getting Started
 
