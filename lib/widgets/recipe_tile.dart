@@ -126,7 +126,7 @@ class _RecipeTileState extends State<RecipeTile> {
                                   RecipePage(recipe: widget.recipe)),
                         );
                       },
-                      child: Icon(Icons.pageview)),
+                      child: Icon(Icons.open_in_full)),
                   Text(widget.recipe.type.toString()),
                   Text('Ingredients:',
                       style: TextStyle(fontWeight: FontWeight.bold)),
