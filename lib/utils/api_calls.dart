@@ -1,26 +1,20 @@
 import 'dart:convert';
-import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:recipes/utils/db.dart';
 import 'package:recipes/models/recipe.dart';
 import 'package:http/http.dart' as http;
 import 'package:recipes/utils/utils.dart';
 import 'package:tuple/tuple.dart';
 
-/*Future<String> loadConfigIp() async {
-  final String configString = await rootBundle.loadString('assets/conifg.json');
-  final Map<String, dynamic> config = jsonDecode(configString);
-  ApiCall._uri = config['ip'];
-  return config['ip'];
-}
-
-
-*/
-final Map<String, dynamic> config =
-    jsonDecode(File('lib\\config.json').readAsStringSync());
-
 class ApiCall {
-  static String _uri = config['ip'];
+  static late String _uri;
+
+  static Future<void> loadConfigIp() async {
+    final jsonString = await rootBundle.loadString('assets/config.json');
+    Map<String, dynamic> config = jsonDecode(jsonString);
+    _uri = config['ip'];
+  }
 
   static Future<Tuple2<int, List<Recipe>>> fetchRecipes(
       DateTime lastSyncTimestamp,
@@ -33,12 +27,8 @@ class ApiCall {
     final response =
         await http.get(Uri.parse(_uri).replace(queryParameters: params));
     if (response.statusCode == 200) {
-      //Map<String, dynamic>
       final List<dynamic> datas = jsonDecode(response.body);
       recipes = datas.map((recipeJson) => Recipe.fromJson(recipeJson)).toList();
-      /*recipes = jsonDecode(response.body)
-          .map((recipeJson) => Recipe.fromJson(recipeJson))
-          .toList();*/
 
       return Tuple2(response.statusCode, recipes);
     }

@@ -1,4 +1,4 @@
-#Mon Oct 21 10:46:52 CEST 2024
+#Mon Oct 21 13:01:28 CEST 2024
 base.0=F\:\\repo\\recipes\\build\\app\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=F\:\\repo\\recipes\\build\\app\\intermediates\\dex\\debug\\mergeLibDexDebug\\0\\classes.dex
 base.2=F\:\\repo\\recipes\\build\\app\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex

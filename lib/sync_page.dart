@@ -81,6 +81,9 @@ class _SyncPageState extends State<SyncPage> {
             !recipe.deleted)
         .toList();
 
+    // Fetch the ip from config file
+    ApiCall.loadConfigIp();
+
     // New recipes on the server
     final Tuple2<int, List<Recipe>> response =
         await ApiCall.fetchRecipes(lastSyncTimestamp);
