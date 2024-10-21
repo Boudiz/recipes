@@ -164,17 +164,16 @@ class _FormRecipeState extends State<FormRecipe> {
                         int firstEmpty = _ingredientController
                             .indexWhere((controller) => controller.text == "");
 
-                        // TODO : fix the amount of fields added
                         int newFields;
                         if (firstEmpty == -1) {
                           newFields = ingredients.length;
                           firstEmpty = _ingredientController.length;
                         } else {
-                          newFields = ingredients.length - firstEmpty + 1;
+                          newFields = ingredients.length - firstEmpty - 1;
                         }
 
                         setState(() {
-                          for (int i = 0; i < newFields - 1; i++) {
+                          for (int i = 0; i < newFields; i++) {
                             _addIngredientField();
                           }
                           for (int i = 0; i < ingredients.length; i++) {

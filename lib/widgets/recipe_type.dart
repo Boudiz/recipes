@@ -30,7 +30,6 @@ class _RecipeTypeSelectorState extends State<RecipeTypeSelector> {
             child: Text(
               type.toString(),
               style: TextStyle(
-                color: Colors.black,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
