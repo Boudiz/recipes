@@ -223,7 +223,7 @@ class _FormRecipeState extends State<FormRecipe> {
                               _nameController,
                               _ingredientController,
                               _descriptionController,
-                              _selectedRecipeType!,
+                              _selectedRecipeType ?? RecipeType.na,
                             );
                             database.insertRecipe(recipe);
                           } else {
@@ -231,7 +231,7 @@ class _FormRecipeState extends State<FormRecipe> {
                                 _nameController,
                                 _ingredientController,
                                 _descriptionController,
-                                _selectedRecipeType!,
+                                _selectedRecipeType ?? RecipeType.na,
                                 createdDate: widget.recipe?.created,
                                 id: widget.recipe!.id);
                             database.updateRecipe(recipe, widget.recipe!.id);
