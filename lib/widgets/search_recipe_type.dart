@@ -34,6 +34,7 @@ class _SearchRecipeTypeState extends State<SearchRecipeType> {
   Widget build(BuildContext context) {
     return Row(
       children: [
+        SizedBox(width: 12),
         GestureDetector(
           onTap: () {
             setState(() {

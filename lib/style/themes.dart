@@ -7,6 +7,7 @@ TextTheme _textTheme = TextTheme(
     headlineSmall: TextStyle(
       decoration: TextDecoration.underline,
     ),
+    bodyLarge: TextStyle(fontWeight: FontWeight.bold),
     bodyMedium: TextStyle(
       fontSize: 16,
     ));
@@ -17,6 +18,7 @@ ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     surface: backgroundColor,
     onPrimaryContainer: cardColor,
+    onTertiaryContainer: cardSecondaryColor,
     onErrorContainer: deletedCardColor,
   ),
   textTheme: _textTheme,
@@ -28,6 +30,7 @@ ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
     surface: darkBackgroundColor,
     onPrimaryContainer: darkCardColor,
+    onTertiaryContainer: darkcardSecondaryColor,
     onErrorContainer: darkDeletedCardColor,
   ),
   textTheme: _textTheme,

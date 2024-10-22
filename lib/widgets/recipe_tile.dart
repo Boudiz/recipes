@@ -101,7 +101,6 @@ class _RecipeTileState extends State<RecipeTile> {
                     tooltip: "Affiche la recette",
                     child: const Icon(Icons.expand_more),
                   ),
-                  //Spacer(),
                   PopupMenuButton<String>(
                     icon: Icon(Icons.more_vert),
                     itemBuilder: (context) => [
@@ -124,17 +123,32 @@ class _RecipeTileState extends State<RecipeTile> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  RecipePage(recipe: widget.recipe)),
-                        );
-                      },
-                      child: Icon(Icons.open_in_full)),
-                  Text(widget.recipe.type.toString()),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                            color: theme.colorScheme.onTertiaryContainer,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Text(
+                          widget.recipe.type.toString(),
+                          style: theme.textTheme.bodyLarge,
+                        ),
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      RecipePage(recipe: widget.recipe)),
+                            );
+                          },
+                          child: Icon(Icons.open_in_full)),
+                      SizedBox(width: 50),
+                    ],
+                  ),
                   Text('Ingredients:',
                       style: TextStyle(fontWeight: FontWeight.bold)),
                   for (var ingredient in widget.recipe.ingredients)
