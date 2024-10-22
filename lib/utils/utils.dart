@@ -88,7 +88,10 @@ class Utils {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Entrer les ingrédients"),
+            title: Text(
+              "Entrer les ingrédients",
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
             content: TextField(
               controller: textFieldController,
               onChanged: (value) => {text = value},

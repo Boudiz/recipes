@@ -24,6 +24,25 @@ class RecipeTile extends StatefulWidget {
 class _RecipeTileState extends State<RecipeTile> {
   bool _isVisible = false;
 
+  Future<void> popUpMenuSelection(String value) async {
+    if (value == "edit") {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => FormRecipeApp(
+                  recipe: widget.recipe,
+                )),
+      );
+    } else if (value == "delete") {
+      bool confirmed = await Utils.showDeleteConfirmationDialog(context);
+      if (confirmed) {
+        widget.onDelete();
+      }
+    } else if (value == "restore") {
+      widget.onRestore();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -38,80 +57,68 @@ class _RecipeTileState extends State<RecipeTile> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-              Text(
-                widget.recipe.name,
-                style: theme.textTheme.headlineLarge,
-                selectionColor: theme.colorScheme.primary,
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              GestureDetector(
-                onDoubleTap: () {
-                  Utils.toggleFavorite(
-                    widget.recipe,
-                    () => setState(() {
-                      widget.recipe.isFavorite = !widget.recipe.isFavorite;
-                    }),
-                  );
-                },
-                child: Icon(
-                  widget.recipe.isFavorite
-                      ? Icons.favorite
-                      : Icons.favorite_border,
-                  color: const Color.fromRGBO(240, 10, 10, 1),
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              FloatingActionButton.small(
-                onPressed: () {
-                  setState(() {
-                    _isVisible = !_isVisible;
-                  });
-                },
-                tooltip: "Affiche la recette",
-                child: const Icon(Icons.expand_more),
-              ),
-              Spacer(),
-              PopupMenuButton<String>(
-                icon: Icon(Icons.more_vert),
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    value: "edit",
-                    child: Text(TextConstants.edit),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: Text(
+                      widget.recipe.name,
+                      style: theme.textTheme.headlineMedium,
+                      selectionColor: theme.colorScheme.primary,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
                   ),
-                  PopupMenuItem(
-                    value: widget.recipe.deleted ? "restore" : "delete",
-                    child: widget.recipe.deleted
-                        ? Text("Restaurer")
-                        : Text(TextConstants.delete),
+                  SizedBox(
+                    width: 10,
                   ),
-                ],
-                onSelected: (value) async {
-                  if (value == "edit") {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FormRecipeApp(
-                                recipe: widget.recipe,
-                              )),
-                    );
-                  } else if (value == "delete") {
-                    bool confirmed =
-                        await Utils.showDeleteConfirmationDialog(context);
-                    if (confirmed) {
-                      widget.onDelete();
-                    }
-                  } else if (value == "restore") {
-                    widget.onRestore();
-                  }
-                },
-              ),
-            ]),
-            SizedBox(height: 4.0),
+                  GestureDetector(
+                    onDoubleTap: () {
+                      Utils.toggleFavorite(
+                        widget.recipe,
+                        () => setState(() {
+                          widget.recipe.isFavorite = !widget.recipe.isFavorite;
+                        }),
+                      );
+                    },
+                    child: Icon(
+                      widget.recipe.isFavorite
+                          ? Icons.favorite
+                          : Icons.favorite_border,
+                      color: const Color.fromRGBO(240, 10, 10, 1),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  FloatingActionButton.small(
+                    onPressed: () {
+                      setState(() {
+                        _isVisible = !_isVisible;
+                      });
+                    },
+                    tooltip: "Affiche la recette",
+                    child: const Icon(Icons.expand_more),
+                  ),
+                  //Spacer(),
+                  PopupMenuButton<String>(
+                    icon: Icon(Icons.more_vert),
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        value: "edit",
+                        child: Text(TextConstants.edit),
+                      ),
+                      PopupMenuItem(
+                        value: widget.recipe.deleted ? "restore" : "delete",
+                        child: widget.recipe.deleted
+                            ? Text("Restaurer")
+                            : Text(TextConstants.delete),
+                      ),
+                    ],
+                    onSelected: popUpMenuSelection,
+                  ),
+                ]),
             Visibility(
               visible: _isVisible,
               child: Column(
@@ -145,21 +152,14 @@ class _RecipeTileState extends State<RecipeTile> {
                         SizedBox(
                           width: 8,
                         ),
-                        Text(ingredient),
+                        Expanded(
+                          child: Text(
+                            ingredient,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
                       ],
                     ),
-
-                  /*SizedBox(height: 8.0),
-                  Text(
-                    'Description:',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    widget.recipe.description,
-                  ),
-                  Text(Utils.dateFormatter.format(widget.recipe.created)),
-                  Text(Utils.dateFormatter.format(widget.recipe.lastModified)),
-                  Text("id: ${widget.recipe.id}"),*/
                 ],
               ),
             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:recipes/models/recipe.dart';
 import 'package:recipes/models/text_constants.dart';
+import 'package:recipes/style/decoration.dart';
 import 'package:recipes/utils/utils.dart';
 import 'package:recipes/utils/db.dart';
 import 'package:recipes/widgets/recipe_type.dart';
@@ -48,7 +49,7 @@ class _FormRecipeState extends State<FormRecipe> {
 
   late List<Widget> _ingredientFields = [
     TextFormField(
-      decoration: InputDecoration(labelText: 'Ingrédient 1'),
+      decoration: inputDecoration(hintText: 'Ingrédient 1'),
       textInputAction: TextInputAction.next,
       controller: _ingredientController[0],
     )
@@ -87,8 +88,8 @@ class _FormRecipeState extends State<FormRecipe> {
     _ingredientController.add(TextEditingController());
     setState(() {
       _ingredientFields.add(TextFormField(
-        decoration: InputDecoration(
-            labelText: "${TextConstants.ingredient} ${ingredientSize + 1}"),
+        decoration: inputDecoration(
+            hintText: "${TextConstants.ingredient} ${ingredientSize + 1}"),
         textInputAction: TextInputAction.next,
         controller: _ingredientController[ingredientSize],
         validator: (value) {
@@ -126,11 +127,11 @@ class _FormRecipeState extends State<FormRecipe> {
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               TextFormField(
-                decoration: const InputDecoration(
-                  hintText: TextConstants.hintRecipeName,
-                ),
+                decoration:
+                    inputDecoration(hintText: TextConstants.hintRecipeName),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
                     return TextConstants.nameValidator;
@@ -169,7 +170,8 @@ class _FormRecipeState extends State<FormRecipe> {
                           newFields = ingredients.length;
                           firstEmpty = _ingredientController.length;
                         } else {
-                          newFields = ingredients.length - firstEmpty - 1;
+                          newFields = ingredients.length -
+                              (_ingredientController.length - firstEmpty);
                         }
 
                         setState(() {
@@ -192,7 +194,7 @@ class _FormRecipeState extends State<FormRecipe> {
                 itemBuilder: (context, index) => _ingredientFields[index],
               ),
               TextFormField(
-                decoration: const InputDecoration(
+                decoration: inputDecoration(
                   hintText: TextConstants.hintRecipeDescription,
                 ),
                 textInputAction: TextInputAction.newline,

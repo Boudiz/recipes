@@ -52,6 +52,8 @@ class _RecipePageState extends State<RecipePage> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return PopScope<dynamic>(
       onPopInvokedWithResult: (didPop, result) {
         _unlockRotationAndScreen();
@@ -61,7 +63,6 @@ class _RecipePageState extends State<RecipePage> {
           padding: const EdgeInsets.all(16.0),
           child: Center(
             child: SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -73,18 +74,59 @@ class _RecipePageState extends State<RecipePage> {
                             })
                           },
                       child: Icon(_isLocked ? Icons.lock : Icons.lock_open)),
-                  SizedBox(
-                    height: 8,
+                  //SizedBox(height: 8),
+                  Text(
+                    widget.recipe.name,
+                    style: theme.textTheme.headlineLarge,
                   ),
-                  Text(widget.recipe.name),
-                  Text("${TextConstants.ingredient}s :"),
+                  Divider(
+                    height: 40,
+                    thickness: 2,
+                    indent: 30,
+                    endIndent: 30,
+                  ),
+                  Text(
+                    "${TextConstants.ingredient}s :",
+                    style: theme.textTheme.headlineSmall,
+                  ),
+                  SizedBox(height: 12),
                   for (var ingredient in widget.recipe.ingredients)
-                    Text(ingredient),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: 6.0,
+                          height: 8.0,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: theme.colorScheme.secondary,
+                          ),
+                        ),
+                        SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            ingredient,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  Divider(
+                    height: 40,
+                    thickness: 2,
+                    indent: 30,
+                    endIndent: 30,
+                  ),
+                  Text(
+                    "Description :",
+                    style: theme.textTheme.headlineSmall,
+                  ),
                   SizedBox(
                     height: 8,
                   ),
-                  Text("Description :"),
                   Text(widget.recipe.description),
+                  SizedBox(height: 55),
                 ],
               ),
             ),

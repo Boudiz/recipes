@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 
 TextTheme _textTheme = TextTheme(
-  headlineLarge: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-  bodyMedium: TextStyle(fontSize: 16),
-);
+    headlineLarge: TextStyle(fontSize: 44, fontWeight: FontWeight.bold),
+    headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    headlineSmall: TextStyle(
+      decoration: TextDecoration.underline,
+    ),
+    bodyMedium: TextStyle(
+      fontSize: 16,
+    ));
 
 ThemeData lightTheme = ThemeData(
   colorScheme: ColorScheme.fromSeed(

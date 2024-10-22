@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:recipes/models/recipe.dart';
+import 'package:recipes/style/decoration.dart';
 
 class RecipeTypeSelector extends StatefulWidget {
   final void Function(RecipeType) onSelectedValueChanged;
@@ -18,11 +19,7 @@ class _RecipeTypeSelectorState extends State<RecipeTypeSelector> {
   Widget build(BuildContext context) {
     return DropdownButtonFormField<RecipeType>(
         value: widget.initalValue,
-        decoration: InputDecoration(
-            border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: Colors.grey, width: 1),
-        )),
+        decoration: inputDecoration(),
         itemHeight: 50,
         items: RecipeType.values.map((RecipeType type) {
           return DropdownMenuItem<RecipeType>(
