@@ -20,6 +20,7 @@ ThemeData lightTheme = ThemeData(
     onPrimaryContainer: cardColor,
     onTertiaryContainer: cardSecondaryColor,
     onErrorContainer: deletedCardColor,
+    shadow: shadow,
   ),
   textTheme: _textTheme,
 );
@@ -32,6 +33,7 @@ ThemeData darkTheme = ThemeData(
     onPrimaryContainer: darkCardColor,
     onTertiaryContainer: darkcardSecondaryColor,
     onErrorContainer: darkDeletedCardColor,
+    shadow: darkShadow,
   ),
   textTheme: _textTheme,
 );

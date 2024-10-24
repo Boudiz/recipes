@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:recipes/models/recipe.dart';
 import 'package:recipes/models/text_constants.dart';
+import 'package:recipes/style/decoration.dart';
 import 'package:recipes/utils/utils.dart';
 import 'package:recipes/add_recipe_form.dart';
 import 'package:recipes/widgets/recipe_page.dart';
@@ -45,13 +46,14 @@ class _RecipeTileState extends State<RecipeTile> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final ThemeData theme = Theme.of(context);
 
     return Card(
       color: widget.recipe.deleted
           ? theme.colorScheme.onErrorContainer
           : theme.colorScheme.onPrimaryContainer,
       margin: EdgeInsets.all(8.0),
+      elevation: 4,
       child: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -128,9 +130,8 @@ class _RecipeTileState extends State<RecipeTile> {
                     children: [
                       Container(
                         padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            color: theme.colorScheme.onTertiaryContainer,
-                            borderRadius: BorderRadius.circular(20)),
+                        decoration:
+                            boxTypeDecoration(theme, widget.recipe.deleted),
                         child: Text(
                           widget.recipe.type.toString(),
                           style: theme.textTheme.bodyLarge,

@@ -69,6 +69,8 @@ class _SearchRecipeTypeState extends State<SearchRecipeType> {
                       widget.onSelectedTypeChanged(_selectedRecipeType);
                     });
                   },
+                  elevation: 2,
+                  pressElevation: 5,
                   labelPadding: EdgeInsets.all(2),
                 );
               }).toList(),
