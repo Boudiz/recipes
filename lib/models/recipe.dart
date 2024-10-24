@@ -178,4 +178,15 @@ class Recipe {
   String toString() {
     return 'Recipe{${deleted ? "DELETED " : ""}name: $name, ingredients: $ingredients, description: $description, type: $type, ${isFavorite ? "favorite," : ""} created: $created, lastModified: $lastModified}';
   }
+
+  String toBeautifulString() {
+    return 'Recette  ${deleted ? "DELETED " : ""}: \n name: $name\n ingredients: $ingredients\n description: $description\n type: $type\n ${isFavorite ? "favorite," : ""}';
+  }
+
+  bool isSimilarTo(Recipe other) {
+    return name == other.name &&
+        type == other.type &&
+        ingredients == other.ingredients &&
+        description == other.description;
+  }
 }

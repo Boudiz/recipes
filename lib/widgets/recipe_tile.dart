@@ -181,6 +181,8 @@ class _RecipeTileState extends State<RecipeTile> {
                         ),
                       ],
                     ),
+                  Text(
+                      "LastModified: ${Utils.dateFormatter.format(widget.recipe.lastModified)}"),
                 ],
               ),
             ),

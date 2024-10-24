@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipes/utils/api_calls.dart';
+import 'package:recipes/utils/conflicting_recipes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:recipes/main.dart';
@@ -92,7 +93,7 @@ class _SyncPageState extends State<SyncPage> {
         .toList();
 
     // Fetch the ip from config file
-    ApiCall.loadConfigIp();
+    await ApiCall.loadConfigIp();
 
     // New recipes on the server
     final Tuple2<int, List<Recipe>> response =
@@ -140,7 +141,7 @@ class _SyncPageState extends State<SyncPage> {
 
       // Resolve the conflicting recipes and update both local and server
       _apiCallStatuses['conflicting'] =
-          await _resolveConflicts(conflictingRecipes, serverRecipes);
+          await resolveConflicts(conflictingRecipes, serverRecipes, context);
     }
 
     setState(() {
@@ -148,19 +149,12 @@ class _SyncPageState extends State<SyncPage> {
           _apiCallStatuses['archived'] == 200 &&
           _apiCallStatuses['new'] == 201 &&
           _apiCallStatuses['modified'] == 200 &&
-          _apiCallStatuses['conflicting'] == 201) {
+          _apiCallStatuses['conflicting'] == 200) {
         lastSyncTimestamp = DateTime.now();
         _saveLastSyncTimestamp();
       }
       _isLoading = false;
     });
-  }
-
-  Future<int> _resolveConflicts(
-      List<Recipe> conflictingRecipes, List<Recipe> serverRecipes) async {
-    int status = 201;
-
-    return status;
   }
 
   @override
@@ -204,7 +198,6 @@ class _SyncPageState extends State<SyncPage> {
                 text: "Fetched Recipes",
                 isLoading: _isLoading,
               ),
-              //SizedBox(height: 10),
               _buildDot(
                 color: _getStatusColor(_apiCallStatuses['archived']),
                 text: "Archived Recipes",
@@ -218,13 +211,11 @@ class _SyncPageState extends State<SyncPage> {
                 text: "New Recipes",
                 isLoading: _isLoading,
               ),
-              //SizedBox(height: 10),
               _buildDot(
                 color: _getStatusColor(_apiCallStatuses['modified']),
                 text: "Modified Recipes",
                 isLoading: _isLoading,
               ),
-              //SizedBox(height: 10),
               _buildDot(
                 color: _getStatusColor(_apiCallStatuses['conflicting']),
                 text: "Conflicting Recipes",

@@ -150,4 +150,23 @@ class Utils {
         });
     return result.future;
   }
+
+  /* static String _createDiffString(
+      String conflictingString, String serverString) {
+    final differences = diff(conflictingString, serverString);
+
+    // Format the diff string for display
+    final formattedDiff = diff
+        .split('\n')
+        .map((line) => line.startsWith('+') || line.startsWith('-')
+            ? Text(line,
+                style: TextStyle(
+                    color: line.startsWith('+') ? Colors.green : Colors.red))
+            : Text(line))
+        .toList();
+
+    return formattedDiff.isNotEmpty
+        ? 'Diff:\n${formattedDiff.join('\n')}'
+        : 'No significant differences found';
+  }*/
 }

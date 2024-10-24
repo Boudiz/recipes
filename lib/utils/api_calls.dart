@@ -37,13 +37,17 @@ class ApiCall {
   }
 
   static Future<int> sendRecipes(List<Recipe> recipeList) async {
-    final db = RecipesDb.instance;
     int status = 201;
+    if (recipeList.isEmpty) {
+      return status;
+    }
+
+    final db = RecipesDb.instance;
     for (Recipe recipe in recipeList) {
       final response = await http.post(Uri.parse(_uri),
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode(recipe.toApiMap()));
-      if (response.statusCode != 201) {
+      if (response.statusCode != 201 || response.body == "") {
         status = response.statusCode;
       } else {
         // Update the local id with the id given by the server
@@ -59,8 +63,12 @@ class ApiCall {
   }
 
   static Future<int> updateRecipes(List<Recipe> recipeList) async {
-    final db = RecipesDb.instance;
     int status = 200;
+    if (recipeList.isEmpty) {
+      return status;
+    }
+
+    final db = RecipesDb.instance;
     for (Recipe recipe in recipeList) {
       final response = await http.put(Uri.parse('$_uri/${recipe.id}'),
           headers: {'Content-Type': 'application/json'},
@@ -78,6 +86,10 @@ class ApiCall {
 
   static Future<int> deleteRecipes(List<Recipe> recipeList) async {
     int status = 200;
+    if (recipeList.isEmpty) {
+      return status;
+    }
+
     for (Recipe recipe in recipeList) {
       final response = await http.delete(Uri.parse('$_uri/${recipe.id}'));
       if (response.statusCode != 200) {
