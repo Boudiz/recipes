@@ -57,7 +57,10 @@ class _SearchRecipeTypeState extends State<SearchRecipeType> {
               spacing: 8,
               children: RecipeType.values.map((type) {
                 return ChoiceChip(
-                  label: Text(type.name),
+                  label: Text(
+                    type.name,
+                    selectionColor: Theme.of(context).colorScheme.primary,
+                  ),
                   selected: _selectedRecipeType.contains(type),
                   onSelected: (selected) {
                     setState(() {

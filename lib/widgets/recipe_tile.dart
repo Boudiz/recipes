@@ -101,7 +101,10 @@ class _RecipeTileState extends State<RecipeTile> {
                       });
                     },
                     tooltip: "Affiche la recette",
-                    child: const Icon(Icons.expand_more),
+                    child: Icon(
+                      Icons.expand_more,
+                      color: theme.colorScheme.primary,
+                    ),
                   ),
                   PopupMenuButton<String>(
                     icon: Icon(Icons.more_vert),
@@ -149,6 +152,9 @@ class _RecipeTileState extends State<RecipeTile> {
                           child: Icon(Icons.open_in_full)),
                       SizedBox(width: 50),
                     ],
+                  ),
+                  SizedBox(
+                    height: 8,
                   ),
                   Text('Ingredients:',
                       style: TextStyle(fontWeight: FontWeight.bold)),

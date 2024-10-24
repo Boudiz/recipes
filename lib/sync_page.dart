@@ -14,6 +14,18 @@ class SyncPageApp extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Syncronisation')),
       body: SyncPage(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
+        },
+        child: Icon(
+          Icons.home,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      ),
     );
   }
 }
@@ -178,42 +190,48 @@ class _SyncPageState extends State<SyncPage> {
           },
           child: const Text('Return'),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Données reçues du serveur"),
-            _buildDot(
-              color: _getStatusColor(_apiCallStatuses['fetch']),
-              text: "Fetched Recipes",
-              isLoading: _isLoading,
-            ),
-            SizedBox(height: 10),
-            _buildDot(
-              color: _getStatusColor(_apiCallStatuses['archived']),
-              text: "Archived Recipes",
-              isLoading: _isLoading,
-            ),
-            SizedBox(height: 10),
-            Text("Données envoyées au serveur"),
-            _buildDot(
-              color: _getStatusColor(_apiCallStatuses['new']),
-              text: "New Recipes",
-              isLoading: _isLoading,
-            ),
-            SizedBox(height: 10),
-            _buildDot(
-              color: _getStatusColor(_apiCallStatuses['modified']),
-              text: "Modified Recipes",
-              isLoading: _isLoading,
-            ),
-            SizedBox(height: 10),
-            _buildDot(
-              color: _getStatusColor(_apiCallStatuses['conflicting']),
-              text: "Conflicting Recipes",
-              isLoading: _isLoading,
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Text("Données reçues du serveur"),
+              SizedBox(height: 10),
+              _buildDot(
+                color: _getStatusColor(_apiCallStatuses['fetch']),
+                text: "Fetched Recipes",
+                isLoading: _isLoading,
+              ),
+              //SizedBox(height: 10),
+              _buildDot(
+                color: _getStatusColor(_apiCallStatuses['archived']),
+                text: "Archived Recipes",
+                isLoading: _isLoading,
+              ),
+              SizedBox(height: 10),
+              Text("Données envoyées au serveur"),
+              SizedBox(height: 10),
+              _buildDot(
+                color: _getStatusColor(_apiCallStatuses['new']),
+                text: "New Recipes",
+                isLoading: _isLoading,
+              ),
+              //SizedBox(height: 10),
+              _buildDot(
+                color: _getStatusColor(_apiCallStatuses['modified']),
+                text: "Modified Recipes",
+                isLoading: _isLoading,
+              ),
+              //SizedBox(height: 10),
+              _buildDot(
+                color: _getStatusColor(_apiCallStatuses['conflicting']),
+                text: "Conflicting Recipes",
+                isLoading: _isLoading,
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -235,22 +253,30 @@ Color _getStatusColor(int? status) {
 Widget _buildDot(
     {required Color color, String? text, required bool isLoading}) {
   return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(text ?? ""),
+      Spacer(),
       (isLoading && color == Colors.grey)
-          ? CircularProgressIndicator(
-              strokeWidth: 3,
+          ? SizedBox(
+              height: 20,
+              width: 20,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+              ),
             )
           : Container(
-              width: 10.0,
-              height: 10.0,
+              width: 20.0,
+              height: 20.0,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: color,
               ),
             ),
+      SizedBox(
+        width: 50,
+      ),
     ],
   );
 }

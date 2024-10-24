@@ -73,7 +73,10 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(builder: (context) => FormRecipeApp()),
           );
         },
-        child: Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+          color: Theme.of(context).colorScheme.primary,
+        ),
       ),
     );
   }
