@@ -68,13 +68,13 @@ class _RecipePageState extends State<RecipePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                      onPressed: () => {
-                            setState(() {
-                              _updateRotationAndScreenLock();
-                            })
-                          },
-                      child: Icon(_isLocked ? Icons.lock : Icons.lock_open)),
-                  //SizedBox(height: 8),
+                    onPressed: () => {
+                      setState(() {
+                        _updateRotationAndScreenLock();
+                      })
+                    },
+                    child: Icon(_isLocked ? Icons.lock : Icons.lock_open),
+                  ),
                   Text(
                     widget.recipe.name,
                     style: theme.textTheme.headlineLarge,
@@ -140,7 +140,10 @@ class _RecipePageState extends State<RecipePage> {
             );
             _unlockRotationAndScreen();
           },
-          child: Icon(Icons.home),
+          child: Icon(
+            Icons.home,
+            color: theme.colorScheme.primary,
+          ),
         ),
       ),
     );

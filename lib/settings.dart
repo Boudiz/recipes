@@ -71,7 +71,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               Row(
                 children: [
-                  Text("Montre les recettes supprimer"),
+                  Text("Montre les recettes supprimées"),
                   Switch(
                     value: context.watch<SettingsProvider>().showDeleted,
                     onChanged: (value) {
