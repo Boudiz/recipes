@@ -137,10 +137,11 @@ class _RecipeListState extends State<RecipeList> {
                     itemBuilder: (context, index, animation) {
                       return _buildTile(index, animation);
                     },
+                    padding: EdgeInsets.only(bottom: 60),
                   ),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 14,
                 ),
               ],
             );
