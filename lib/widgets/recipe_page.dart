@@ -67,13 +67,16 @@ class _RecipePageState extends State<RecipePage> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ElevatedButton(
+                  FloatingActionButton(
                     onPressed: () => {
                       setState(() {
                         _updateRotationAndScreenLock();
                       })
                     },
-                    child: Icon(_isLocked ? Icons.lock : Icons.lock_open),
+                    child: Icon(
+                      _isLocked ? Icons.lock : Icons.lock_open,
+                      color: theme.colorScheme.primary,
+                    ),
                   ),
                   Text(
                     widget.recipe.name,

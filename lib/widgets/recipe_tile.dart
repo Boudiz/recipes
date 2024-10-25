@@ -89,6 +89,7 @@ class _RecipeTileState extends State<RecipeTile> {
                           ? Icons.favorite
                           : Icons.favorite_border,
                       color: const Color.fromRGBO(240, 10, 10, 1),
+                      size: 35,
                     ),
                   ),
                   SizedBox(
@@ -104,6 +105,7 @@ class _RecipeTileState extends State<RecipeTile> {
                     child: Icon(
                       Icons.expand_more,
                       color: theme.colorScheme.primary,
+                      size: 30,
                     ),
                   ),
                   PopupMenuButton<String>(

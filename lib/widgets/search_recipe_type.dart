@@ -45,6 +45,7 @@ class _SearchRecipeTypeState extends State<SearchRecipeType> {
           child: Icon(
             _selectedFavorite ? Icons.bookmark : Icons.bookmark_border,
             color: Colors.red,
+            size: 35,
           ),
         ),
         SizedBox(
@@ -60,6 +61,7 @@ class _SearchRecipeTypeState extends State<SearchRecipeType> {
                   label: Text(
                     type.name,
                     selectionColor: Theme.of(context).colorScheme.primary,
+                    style: TextStyle(fontSize: 20),
                   ),
                   selected: _selectedRecipeType.contains(type),
                   onSelected: (selected) {

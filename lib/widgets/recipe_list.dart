@@ -26,7 +26,7 @@ class _RecipeListState extends State<RecipeList> {
   List<Recipe> _filteredRecipes = [];
   String _searchText = "";
   final TextEditingController _searchController = TextEditingController();
-  List<RecipeType> _selectedRecipeType = [...RecipeType.values];
+  List<RecipeType> _selectedRecipeType = []; //[...RecipeType.values];
   bool _selectedFavorite = false;
 
   @override
@@ -63,7 +63,8 @@ class _RecipeListState extends State<RecipeList> {
 
     // Normalize search term
     final String searchText = searchTerm.toLowerCase();
-    return _selectedRecipeType.contains(recipe.type) &&
+    return (_selectedRecipeType.isEmpty ||
+            _selectedRecipeType.contains(recipe.type)) &&
         (recipe.name.toLowerCase().contains(searchText) ||
             recipe.ingredients.any(
                 (ingredient) => ingredient.toLowerCase().contains(searchText)));
@@ -118,6 +119,7 @@ class _RecipeListState extends State<RecipeList> {
                   onChanged: (text) => debounce(() => _searchRecipes(text)),
                   controller: _searchController,
                 ),
+                SizedBox(height: 8),
                 SearchRecipeType(
                   onSelectedTypeChanged: _onRecipeTypeSelected,
                   initalTypeValues: _selectedRecipeType,
