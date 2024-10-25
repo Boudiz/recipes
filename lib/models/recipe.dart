@@ -139,6 +139,7 @@ class Recipe {
   // Convert Recipe into a Map compatible with API call
   Map<String, Object?> toApiMap() {
     return {
+      'id': id,
       'name': name,
       'ingredients': ingredients,
       'description': description,
