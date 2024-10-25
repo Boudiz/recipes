@@ -46,11 +46,17 @@ class RecipesDb {
     final db = await database;
     final List<Map<String, Object?>> recipeMaps;
     if (lastModified == null) {
-      recipeMaps = await db.query('recipes');
+      recipeMaps = await db.query(
+        'recipes',
+        orderBy: 'UPPER(name) ASC',
+      );
     } else {
-      recipeMaps = await db.query('recipes',
-          where: 'lastModified >= ?',
-          whereArgs: [Utils.dateFormatter.format(lastModified)]);
+      recipeMaps = await db.query(
+        'recipes',
+        where: 'lastModified >= ?',
+        whereArgs: [Utils.dateFormatter.format(lastModified)],
+        orderBy: 'UPPER(name) ASC',
+      );
     }
     return List.generate(recipeMaps.length, (i) {
       return Recipe.fromMap(recipeMaps[i]);
