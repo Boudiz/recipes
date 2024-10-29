@@ -26,7 +26,7 @@ class _RecipeTileState extends State<RecipeTile> {
   bool _isVisible = false;
 
   Future<void> popUpMenuSelection(String value) async {
-    if (value == "edit") {
+    if (value == 'edit') {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -34,12 +34,12 @@ class _RecipeTileState extends State<RecipeTile> {
                   recipe: widget.recipe,
                 )),
       );
-    } else if (value == "delete") {
+    } else if (value == 'delete') {
       bool confirmed = await Utils.showDeleteConfirmationDialog(context);
       if (confirmed) {
         widget.onDelete();
       }
-    } else if (value == "restore") {
+    } else if (value == 'restore') {
       widget.onRestore();
     }
   }
@@ -101,7 +101,7 @@ class _RecipeTileState extends State<RecipeTile> {
                         _isVisible = !_isVisible;
                       });
                     },
-                    tooltip: "Affiche la recette",
+                    tooltip: TextConstants.showRecipe,
                     child: Icon(
                       Icons.expand_more,
                       color: theme.colorScheme.primary,
@@ -112,13 +112,13 @@ class _RecipeTileState extends State<RecipeTile> {
                     icon: Icon(Icons.more_vert),
                     itemBuilder: (context) => [
                       PopupMenuItem(
-                        value: "edit",
+                        value: 'edit',
                         child: Text(TextConstants.edit),
                       ),
                       PopupMenuItem(
-                        value: widget.recipe.deleted ? "restore" : "delete",
+                        value: widget.recipe.deleted ? 'restore' : 'delete',
                         child: widget.recipe.deleted
-                            ? Text("Restaurer")
+                            ? Text(TextConstants.restore)
                             : Text(TextConstants.delete),
                       ),
                     ],
@@ -183,8 +183,6 @@ class _RecipeTileState extends State<RecipeTile> {
                         ),
                       ],
                     ),
-                  Text(
-                      "LastModified: ${Utils.dateFormatter.format(widget.recipe.lastModified)}"),
                 ],
               ),
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipes/models/text_constants.dart';
 import 'package:recipes/utils/api_calls.dart';
 import 'package:recipes/utils/conflicting_recipes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,7 +14,7 @@ class SyncPageApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Syncronisation')),
+      appBar: AppBar(title: Text(TextConstants.syncTitle)),
       body: SyncPage(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -66,6 +67,7 @@ class _SyncPageState extends State<SyncPage> {
   }
 
   void _updateDatabase() async {
+    // Reset statuses
     setState(() {
       _isLoading = true;
       _apiCallStatuses = {
@@ -74,9 +76,10 @@ class _SyncPageState extends State<SyncPage> {
         'new': 0,
         'modified': 0,
         'conflicting': 0,
-      }; // Reset statuses
+      };
     });
 
+    // Fetch recipes from local database
     List<Recipe> localRecipes =
         await database.getRecipes(lastModified: lastSyncTimestamp);
     List<Recipe> deletedRecipes =
@@ -164,13 +167,14 @@ class _SyncPageState extends State<SyncPage> {
                 return const CircularProgressIndicator();
               } else if (snapshot.hasError) {
                 return Text(
-                    'Error loading last sync timestamp: ${snapshot.error}');
+                    "${TextConstants.errorLastSync}: ${snapshot.error}");
               } else {
                 return Text(
-                    "Dernière syncronisation: ${Utils.dateFormatter.format(lastSyncTimestamp)}");
+                    "${TextConstants.lastSync}: ${Utils.dateFormatter.format(lastSyncTimestamp)}");
               }
             }),
-        ElevatedButton(onPressed: _updateDatabase, child: const Text('Sync')),
+        ElevatedButton(
+            onPressed: _updateDatabase, child: Text(TextConstants.syncTitle)),
         ElevatedButton(
           onPressed: () {
             Navigator.push(
@@ -178,7 +182,7 @@ class _SyncPageState extends State<SyncPage> {
               MaterialPageRoute(builder: (context) => HomePage()),
             );
           },
-          child: const Text('Return'),
+          child: Text(TextConstants.cancel),
         ),
         Padding(
           padding: const EdgeInsets.all(12.0),
@@ -187,34 +191,34 @@ class _SyncPageState extends State<SyncPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Text("Données reçues du serveur"),
+              Text(TextConstants.dataFromServer),
               SizedBox(height: 10),
               _buildDot(
                 color: _getStatusColor(_apiCallStatuses['fetch']),
-                text: "Fetched Recipes",
+                text: TextConstants.fetchedRecipes,
                 isLoading: _isLoading,
               ),
               _buildDot(
                 color: _getStatusColor(_apiCallStatuses['archived']),
-                text: "Archived Recipes",
+                text: TextConstants.archivedRecipes,
                 isLoading: _isLoading,
               ),
               SizedBox(height: 10),
-              Text("Données envoyées au serveur"),
+              Text(TextConstants.dataSendToServer),
               SizedBox(height: 10),
               _buildDot(
                 color: _getStatusColor(_apiCallStatuses['new']),
-                text: "New Recipes",
+                text: TextConstants.newRecipes,
                 isLoading: _isLoading,
               ),
               _buildDot(
                 color: _getStatusColor(_apiCallStatuses['modified']),
-                text: "Modified Recipes",
+                text: TextConstants.modifiedRecipes,
                 isLoading: _isLoading,
               ),
               _buildDot(
                 color: _getStatusColor(_apiCallStatuses['conflicting']),
-                text: "Conflicting Recipes",
+                text: TextConstants.conflictingRecipes,
                 isLoading: _isLoading,
               ),
             ],

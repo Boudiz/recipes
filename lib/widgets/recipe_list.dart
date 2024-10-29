@@ -80,7 +80,7 @@ class _RecipeListState extends State<RecipeList> {
           } else if (snapshot.hasError) {
             return Center(child: Text("Error: ${snapshot.error}"));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text("No recipe."));
+            return Center(child: Text(TextConstants.noRecipe));
           } else {
             bool showDeleted = context.watch<SettingsProvider>().showDeleted;
             if (showDeleted) {

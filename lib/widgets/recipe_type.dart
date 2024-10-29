@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:recipes/models/recipe.dart';
+import 'package:recipes/models/text_constants.dart';
 import 'package:recipes/style/decoration.dart';
 
 class RecipeTypeSelector extends StatefulWidget {
@@ -20,6 +21,7 @@ class _RecipeTypeSelectorState extends State<RecipeTypeSelector> {
     return DropdownButtonFormField<RecipeType>(
         value: widget.initalValue,
         decoration: inputDecoration(),
+        hint: Text(TextConstants.hintRecipeType),
         itemHeight: 50,
         items: RecipeType.values.map((RecipeType type) {
           return DropdownMenuItem<RecipeType>(

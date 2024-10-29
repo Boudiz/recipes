@@ -122,7 +122,7 @@ class _RecipePageState extends State<RecipePage> {
                     endIndent: 30,
                   ),
                   Text(
-                    "Description :",
+                    "${TextConstants.description} :",
                     style: theme.textTheme.headlineSmall,
                   ),
                   SizedBox(

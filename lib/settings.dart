@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:recipes/models/text_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsProvider extends ChangeNotifier {
@@ -51,7 +52,7 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text(TextConstants.settings),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -60,7 +61,7 @@ class _SettingsPageState extends State<SettingsPage> {
             children: [
               Row(
                 children: [
-                  Text("Dark mode "),
+                  Text(TextConstants.darkMode),
                   Switch(
                     value: context.watch<SettingsProvider>().isDarkMode,
                     onChanged: (value) {
@@ -71,7 +72,7 @@ class _SettingsPageState extends State<SettingsPage> {
               ),
               Row(
                 children: [
-                  Text("Montre les recettes supprimées"),
+                  Text(TextConstants.showDeleted),
                   Switch(
                     value: context.watch<SettingsProvider>().showDeleted,
                     onChanged: (value) {

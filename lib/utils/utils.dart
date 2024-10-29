@@ -88,7 +88,7 @@ class Utils {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text(
-              "Entrer les ingrédients",
+              TextConstants.enterIngredients,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             content: TextField(
@@ -109,7 +109,7 @@ class Utils {
                   ingredientsCompleter.complete(splitIngredients(text));
                   Navigator.of(context).pop();
                 },
-                child: Text("OK"),
+                child: Text(TextConstants.ok),
               )
             ],
           );
@@ -139,7 +139,7 @@ class Utils {
                   Navigator.of(context).pop();
                   result.complete(true);
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Recette supprimée')),
+                    SnackBar(content: Text(TextConstants.deletedRecipe)),
                   );
                 },
                 child: Text(TextConstants.delete),

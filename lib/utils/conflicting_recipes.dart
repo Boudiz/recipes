@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:recipes/models/recipe.dart';
+import 'package:recipes/models/text_constants.dart';
 import 'package:recipes/utils/api_calls.dart';
 import 'package:recipes/utils/db.dart';
 import 'package:recipes/utils/utils.dart';
@@ -51,10 +52,10 @@ Future<int> resolveConflicts(List<Recipe> conflictingRecipes,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Your version:'),
+                Text(TextConstants.localVersion),
                 Text(conflictingRecipe.toBeautifulString()),
                 SizedBox(height: 16),
-                Text('Server version:'),
+                Text(TextConstants.serverVersion),
                 Text(serverRecipe.toBeautifulString()),
               ],
             ),
@@ -62,11 +63,11 @@ Future<int> resolveConflicts(List<Recipe> conflictingRecipes,
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, 0),
-              child: Text('Keep your version'),
+              child: Text(TextConstants.keepLocalVersion),
             ),
             TextButton(
               onPressed: () => Navigator.pop(context, 1),
-              child: Text('Use server version'),
+              child: Text(TextConstants.keepServerVersion),
             ),
           ],
         ),
