@@ -52,7 +52,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //Provider.of<SettingsProvider>(context, listen: false).loadSettings();
     return Scaffold(
       appBar: AppBar(
         title: Text(TextConstants.title),

@@ -26,7 +26,7 @@ class _RecipeListState extends State<RecipeList> {
   List<Recipe> _filteredRecipes = [];
   String _searchText = "";
   final TextEditingController _searchController = TextEditingController();
-  List<RecipeType> _selectedRecipeType = []; //[...RecipeType.values];
+  List<RecipeType> _selectedRecipeType = [];
   bool _selectedFavorite = false;
 
   @override
