@@ -39,6 +39,7 @@ class Utils {
 
   static void toggleFavorite(Recipe recipe, Function updateFavoriteState) {
     updateFavoriteState();
+    recipe.lastModified = DateTime.now();
     database.updateRecipe(recipe, recipe.id);
   }
 

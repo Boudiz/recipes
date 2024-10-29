@@ -55,6 +55,7 @@ enum RecipeType {
   entree,
   plat,
   dessert,
+  cocktail,
   na;
 
   @override
@@ -66,6 +67,8 @@ enum RecipeType {
         return 'Plat';
       case RecipeType.dessert:
         return 'Dessert';
+      case RecipeType.cocktail:
+        return 'Cocktail';
       case RecipeType.na:
         return 'N/A';
       default:
@@ -77,7 +80,8 @@ enum RecipeType {
     0: RecipeType.entree,
     1: RecipeType.plat,
     2: RecipeType.dessert,
-    3: RecipeType.na,
+    3: RecipeType.cocktail,
+    4: RecipeType.na,
   };
 
   static RecipeType fromInt(int value) {
@@ -170,6 +174,7 @@ class Recipe {
         name: json['name'],
         ingredients: List<String>.from(json['ingredients']),
         description: json['description'],
+        isFavorite: json['isFavorite'] ?? 1 == 1,
         type: RecipeType.fromInt(json['type']),
         created: Utils.dateFormatter.parse(json['created']),
         lastModified: Utils.dateFormatter.parse(json['lastModified']));
