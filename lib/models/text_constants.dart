@@ -27,7 +27,8 @@ class TextConstants {
   static const String dataSendToServer = "Données envoyées au serveur";
   static const String newRecipes = "Nouvelles Recettes";
   static const String modifiedRecipes = "Recettes Modifiées";
-  static const String conflictingRecipes = "Conflicting Recipes";
+  static const String deletedRecipes = "Recettes Supprimées";
+  static const String conflictingRecipes = "Recettes Conflictuelles";
   static const String localVersion = "Version locale :";
   static const String serverVersion = "Version du serveur :";
   static const String keepLocalVersion = "Garder la version locale";

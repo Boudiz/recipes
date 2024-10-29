@@ -47,6 +47,7 @@ class _SyncPageState extends State<SyncPage> {
     'archived': 0,
     'new': 0,
     'modified': 0,
+    'deleted': 0,
     'conflicting': 0,
   };
 
@@ -75,6 +76,7 @@ class _SyncPageState extends State<SyncPage> {
         'archived': 0,
         'new': 0,
         'modified': 0,
+        'deleted': 0,
         'conflicting': 0,
       };
     });
@@ -141,7 +143,7 @@ class _SyncPageState extends State<SyncPage> {
       Utils.deleteRecipes(archivedRecipes);
 
       // Send deleted recipes to the server and delete them locally
-      await ApiCall.deleteRecipes(deletedRecipes);
+      _apiCallStatuses['deleted'] = await ApiCall.deleteRecipes(deletedRecipes);
       Utils.deleteRecipes(deletedRecipes);
 
       // Resolve the conflicting recipes and update both local and server
@@ -227,6 +229,11 @@ class _SyncPageState extends State<SyncPage> {
               _buildDot(
                 color: _getStatusColor(_apiCallStatuses['modified']),
                 text: TextConstants.modifiedRecipes,
+                isLoading: _isLoading,
+              ),
+              _buildDot(
+                color: _getStatusColor(_apiCallStatuses['deleted']),
+                text: TextConstants.deletedRecipes,
                 isLoading: _isLoading,
               ),
               _buildDot(
