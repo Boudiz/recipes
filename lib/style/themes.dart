@@ -2,12 +2,25 @@ import 'package:flutter/material.dart';
 import 'colors.dart';
 
 TextTheme _textTheme = TextTheme(
-    headlineLarge: TextStyle(fontSize: 44, fontWeight: FontWeight.bold),
-    headlineMedium: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+    headlineLarge: TextStyle(
+      fontSize: 44,
+      fontWeight: FontWeight.bold,
+    ),
+    headlineMedium: TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+    ),
     headlineSmall: TextStyle(
+      fontSize: 20,
       decoration: TextDecoration.underline,
     ),
-    bodyLarge: TextStyle(fontWeight: FontWeight.bold),
+    labelSmall: TextStyle(
+      fontSize: 16,
+      fontWeight: FontWeight.bold,
+    ),
+    bodyLarge: TextStyle(
+      fontWeight: FontWeight.bold,
+    ),
     bodyMedium: TextStyle(
       fontSize: 16,
     ));

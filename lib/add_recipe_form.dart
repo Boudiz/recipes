@@ -52,6 +52,12 @@ class _FormRecipeState extends State<FormRecipe> {
       decoration: inputDecoration(hintText: 'Ingrédient 1'),
       textInputAction: TextInputAction.next,
       controller: _ingredientController[0],
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return TextConstants.ingredientValidator;
+        }
+        return null;
+      },
     )
   ];
 
@@ -141,6 +147,7 @@ class _FormRecipeState extends State<FormRecipe> {
                 textInputAction: TextInputAction.next,
                 controller: _nameController,
               ),
+              SizedBox(height: 2),
               RecipeTypeSelector(
                 onSelectedValueChanged: _onRecipeTypeSelected,
                 initalValue: _selectedRecipeType,
@@ -149,7 +156,10 @@ class _FormRecipeState extends State<FormRecipe> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("${TextConstants.ingredient}s"),
+                  Text(
+                    "${TextConstants.ingredient}s",
+                    style: Theme.of(context).textTheme.labelSmall,
+                  ),
                   ElevatedButton(
                     onPressed: _addIngredientField,
                     child: Icon(Icons.add),
@@ -193,7 +203,14 @@ class _FormRecipeState extends State<FormRecipe> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: _ingredientFields.length,
-                itemBuilder: (context, index) => _ingredientFields[index],
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      _ingredientFields[index],
+                      const SizedBox(height: 2)
+                    ],
+                  );
+                },
               ),
               TextFormField(
                 decoration: inputDecoration(

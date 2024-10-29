@@ -158,6 +158,8 @@ class _SyncPageState extends State<SyncPage> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Column(
       children: [
         FutureBuilder(
@@ -173,16 +175,10 @@ class _SyncPageState extends State<SyncPage> {
                     "${TextConstants.lastSync}: ${Utils.dateFormatter.format(lastSyncTimestamp)}");
               }
             }),
+        SizedBox(height: 8),
         ElevatedButton(
-            onPressed: _updateDatabase, child: Text(TextConstants.syncTitle)),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
-            );
-          },
-          child: Text(TextConstants.cancel),
+          onPressed: _updateDatabase,
+          child: Text(TextConstants.syncTitle),
         ),
         Padding(
           padding: const EdgeInsets.all(12.0),
@@ -191,7 +187,16 @@ class _SyncPageState extends State<SyncPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             mainAxisSize: MainAxisSize.max,
             children: [
-              Text(TextConstants.dataFromServer),
+              Divider(
+                height: 40,
+                thickness: 2,
+                indent: 30,
+                endIndent: 30,
+              ),
+              Text(
+                TextConstants.dataFromServer,
+                style: theme.textTheme.headlineSmall,
+              ),
               SizedBox(height: 10),
               _buildDot(
                 color: _getStatusColor(_apiCallStatuses['fetch']),
@@ -203,8 +208,14 @@ class _SyncPageState extends State<SyncPage> {
                 text: TextConstants.archivedRecipes,
                 isLoading: _isLoading,
               ),
-              SizedBox(height: 10),
-              Text(TextConstants.dataSendToServer),
+              Divider(
+                height: 40,
+                thickness: 2,
+                indent: 30,
+                endIndent: 30,
+              ),
+              Text(TextConstants.dataSendToServer,
+                  style: theme.textTheme.headlineSmall),
               SizedBox(height: 10),
               _buildDot(
                 color: _getStatusColor(_apiCallStatuses['new']),
