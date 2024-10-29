@@ -22,16 +22,16 @@ class TextConstants {
   // Sync
   static const String lastSync = "Dernière syncronisation";
   static const String dataFromServer = "Données reçues du serveur";
-  static const String fetchedRecipes = "Fetched Recipes";
-  static const String archivedRecipes = "Archived Recipes";
+  static const String fetchedRecipes = "Recettes Récupérées";
+  static const String archivedRecipes = "Recettes Archivées";
   static const String dataSendToServer = "Données envoyées au serveur";
-  static const String newRecipes = "New Recipes";
-  static const String modifiedRecipes = "Modified Recipes";
+  static const String newRecipes = "Nouvelles Recettes";
+  static const String modifiedRecipes = "Recettes Modifiées";
   static const String conflictingRecipes = "Conflicting Recipes";
-  static const String localVersion = "Your version:";
-  static const String serverVersion = "Server version:";
-  static const String keepLocalVersion = "Keep your version";
-  static const String keepServerVersion = "Use server version";
+  static const String localVersion = "Version locale :";
+  static const String serverVersion = "Version du serveur :";
+  static const String keepLocalVersion = "Garder la version locale";
+  static const String keepServerVersion = "Garder la version du serveur";
 
   // Recipe
   static const String ingredient = "Ingrédient";

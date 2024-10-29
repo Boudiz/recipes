@@ -30,8 +30,9 @@ Future<int> _updateDbsAndServer(Recipe recipe, int choice) async {
 
 Future<int> resolveConflicts(List<Recipe> conflictingRecipes,
     List<Recipe> serverRecipes, BuildContext context) async {
-  int status = 200;
+  int status = 0;
 
+  ThemeData theme = Theme.of(context);
   // Iterate through conflicting recipes
   for (final conflictingRecipe in conflictingRecipes) {
     // Find the corresponding server recipe based on ID
@@ -52,10 +53,14 @@ Future<int> resolveConflicts(List<Recipe> conflictingRecipes,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(TextConstants.localVersion),
+                Text(
+                  TextConstants.localVersion,
+                  style: theme.textTheme.headlineMedium,
+                ),
                 Text(conflictingRecipe.toBeautifulString()),
                 SizedBox(height: 16),
-                Text(TextConstants.serverVersion),
+                Text(TextConstants.serverVersion,
+                    style: theme.textTheme.headlineMedium),
                 Text(serverRecipe.toBeautifulString()),
               ],
             ),
@@ -77,7 +82,7 @@ Future<int> resolveConflicts(List<Recipe> conflictingRecipes,
       if (result != null) {
         int localStatus = await _updateDbsAndServer(
             result == 0 ? conflictingRecipe : serverRecipe, result);
-        status = (status != 200) ? status : localStatus;
+        status = (status > 300) ? status : localStatus;
       } else {
         // Handle if the user close the windows without making a choice
         return 400;

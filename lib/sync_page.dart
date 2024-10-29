@@ -102,15 +102,15 @@ class _SyncPageState extends State<SyncPage> {
     final Tuple2<int, List<Recipe>> response =
         await ApiCall.fetchRecipes(lastSyncTimestamp);
 
-    _apiCallStatuses['fetch'] = response.item1;
+    _apiCallStatuses['fetch'] = response.item2.isEmpty ? 0 : response.item1;
 
     final Tuple2<int, List<Recipe>> archivedResponse =
         await ApiCall.fetchRecipes(lastSyncTimestamp, isArchived: 'true');
 
-    _apiCallStatuses['archived'] = archivedResponse.item1;
+    _apiCallStatuses['archived'] =
+        archivedResponse.item2.isEmpty ? 0 : archivedResponse.item1;
 
-    if (_apiCallStatuses['fetch'] == 200 &&
-        _apiCallStatuses['archived'] == 200) {
+    if (_areApiCallSuccesful(_apiCallStatuses)) {
       List<Recipe> serverRecipes = response.item2;
       List<Recipe> archivedRecipes = archivedResponse.item2;
 
@@ -127,12 +127,14 @@ class _SyncPageState extends State<SyncPage> {
 
       // Send updated local recipes that where not modified on the server
       _apiCallStatuses['modified'] = await ApiCall.updateRecipes(modifiedRecipes
-          .where((recipe) => !conflictingRecipes.contains(recipe))
+          .where((recipe) => !conflictingRecipes
+              .any((conflictRecipe) => conflictRecipe.id == recipe.id))
           .toList());
 
       // Insert new recipes from the server that where not modified locally
       Utils.insertRecipes(serverRecipes
-          .where((recipe) => !conflictingRecipes.contains(recipe))
+          .where((recipe) => !conflictingRecipes
+              .any((conflictRecipe) => conflictRecipe.id == recipe.id))
           .toList());
 
       // Delete archived recipes on local database

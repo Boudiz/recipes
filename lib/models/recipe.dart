@@ -185,7 +185,8 @@ class Recipe {
   }
 
   bool isSimilarTo(Recipe other) {
-    return name == other.name &&
+    return id == other.id &&
+        name == other.name &&
         type == other.type &&
         ingredients == other.ingredients &&
         description == other.description;
