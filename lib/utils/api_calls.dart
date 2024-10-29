@@ -37,19 +37,18 @@ class ApiCall {
   }
 
   static Future<int> sendRecipes(List<Recipe> recipeList) async {
-    int status = 201;
-    if (recipeList.isEmpty) {
-      return status;
-    }
+    int status = 0;
 
     final db = RecipesDb.instance;
     for (Recipe recipe in recipeList) {
       final response = await http.post(Uri.parse(_uri),
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode(recipe.toApiMap()));
-      if (response.statusCode != 201 || response.body == "") {
-        status = response.statusCode;
-      } else {
+
+      // If one of the previous answer is an error keep its statuscode
+      status = (status > 300) ? status : response.statusCode;
+
+      if (response.statusCode == 201 && response.body != "") {
         // Update the local id with the id given by the server
         final String serverId = jsonDecode(response.body)['id'];
         db.updateItemWithServerId(recipe.id, serverId);
@@ -63,19 +62,18 @@ class ApiCall {
   }
 
   static Future<int> updateRecipes(List<Recipe> recipeList) async {
-    int status = 200;
-    if (recipeList.isEmpty) {
-      return status;
-    }
-
+    int status = 0;
     final db = RecipesDb.instance;
+
     for (Recipe recipe in recipeList) {
       final response = await http.put(Uri.parse('$_uri/${recipe.id}'),
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode(recipe.toApiMap()));
-      if (response.statusCode != 200) {
-        status = response.statusCode;
-      } else {
+
+      // If one of the previous answer is an error keep its statuscode
+      status = (status > 300) ? status : response.statusCode;
+
+      if (response.statusCode == 200) {
         final String serverLastModified =
             jsonDecode(response.body)['lastModified'];
         db.updateItemWithServerLastModified(recipe.id, serverLastModified);
@@ -85,16 +83,13 @@ class ApiCall {
   }
 
   static Future<int> deleteRecipes(List<Recipe> recipeList) async {
-    int status = 200;
-    if (recipeList.isEmpty) {
-      return status;
-    }
+    int status = 0;
 
     for (Recipe recipe in recipeList) {
       final response = await http.delete(Uri.parse('$_uri/${recipe.id}'));
-      if (response.statusCode != 200) {
-        status = response.statusCode;
-      }
+
+      // If one of the previous answer is an error keep its statuscode
+      status = (status > 300) ? status : response.statusCode;
     }
     return status;
   }

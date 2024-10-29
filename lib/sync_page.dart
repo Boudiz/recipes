@@ -145,11 +145,7 @@ class _SyncPageState extends State<SyncPage> {
     }
 
     setState(() {
-      if (_apiCallStatuses['fetch'] == 200 &&
-          _apiCallStatuses['archived'] == 200 &&
-          _apiCallStatuses['new'] == 201 &&
-          _apiCallStatuses['modified'] == 200 &&
-          _apiCallStatuses['conflicting'] == 200) {
+      if (_areApiCallSuccesful(_apiCallStatuses)) {
         lastSyncTimestamp = DateTime.now();
         _saveLastSyncTimestamp();
       }
@@ -229,22 +225,23 @@ class _SyncPageState extends State<SyncPage> {
   }
 }
 
+bool _areApiCallSuccesful(Map<String, int> apiCallStatuses) {
+  return apiCallStatuses.values.every((status) => status < 300);
+}
+
 Color _getStatusColor(int? status) {
-  switch (status) {
-    case 0:
-      return Colors.grey;
-    case 200:
-    case 201:
-      return Colors.green;
-    default:
-      return Colors.red;
+  if (status == null || status > 300) {
+    return Colors.red;
   }
+  if (status >= 200) {
+    return Colors.green;
+  }
+  return Colors.grey;
 }
 
 Widget _buildDot(
     {required Color color, String? text, required bool isLoading}) {
   return Row(
-    //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text(text ?? ""),

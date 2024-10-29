@@ -145,6 +145,7 @@ class _FormRecipeState extends State<FormRecipe> {
                 onSelectedValueChanged: _onRecipeTypeSelected,
                 initalValue: _selectedRecipeType,
               ),
+              SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -187,6 +188,7 @@ class _FormRecipeState extends State<FormRecipe> {
                       label: Icon(Icons.text_fields_sharp)),
                 ],
               ),
+              SizedBox(height: 8),
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
