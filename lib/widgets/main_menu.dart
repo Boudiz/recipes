@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recipes/add_recipe_form.dart';
+import 'package:recipes/models/text_constants.dart';
 import 'package:recipes/settings.dart';
 import 'package:recipes/sync_page.dart';
 
@@ -15,17 +16,17 @@ class MenuDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.add),
-            title: Text('Ajouter une recette'),
+            title: Text(TextConstants.formTitle),
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => FormRecipeApp()),
-              );
+              ).then((_) => Navigator.pop(context));
             },
           ),
           ListTile(
             leading: Icon(Icons.sync),
-            title: Text('Syncronisation'),
+            title: Text(TextConstants.syncTitle),
             onTap: () {
               Navigator.push(
                 context,
@@ -35,7 +36,7 @@ class MenuDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.settings),
-            title: Text('Settings'),
+            title: Text(TextConstants.settings),
             onTap: () {
               Navigator.push(
                 context,
