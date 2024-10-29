@@ -56,7 +56,11 @@ class _SearchRecipeTypeState extends State<SearchRecipeType> {
             scrollDirection: Axis.horizontal,
             child: Wrap(
               spacing: 8,
-              children: RecipeType.values.map((type) {
+              children: [
+                ..._selectedRecipeType,
+                ...RecipeType.values
+                    .where((type) => !_selectedRecipeType.contains(type))
+              ].map((type) {
                 return ChoiceChip(
                   label: Text(
                     type.name,
