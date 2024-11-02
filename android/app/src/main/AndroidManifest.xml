@@ -42,4 +42,7 @@
             <data android:mimeType="text/plain"/>
         </intent>
     </queries>
+
+    <!-- Internet permission, to access local API end point  -->
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
